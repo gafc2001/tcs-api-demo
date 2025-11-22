@@ -16,7 +16,7 @@ export class UserMapper {
       id: domain.getId(),
       name: domain.getName(),
       email: domain.getEmail(),
-      password: domain.getPassword(),
+      password: domain.getEncryptedPassword(),
     };
   }
 }

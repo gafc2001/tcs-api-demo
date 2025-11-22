@@ -1,98 +1,130 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Back TCS - API REST
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST desarrollada con NestJS para la gestión de productos, usuarios y cotizaciones.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requisitos Previos
 
-## Description
+- Node.js (v18 o superior)
+- npm o yarn
+- PostgreSQL (v15 o superior)
+- Docker y Docker Compose (opcional, para desarrollo local)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Configuración del Proyecto
 
-## Project setup
+### 1. Instalación de Dependencias
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+### 2. Configuración de Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto basándote en el archivo `.env-example`:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+cp .env-example .env
 ```
 
-## Run tests
+Configura las siguientes variables de entorno en tu archivo `.env`:
+
+#### Variables de Base de Datos (Requeridas)
+
+```env
+DB_HOST=localhost          # Host de PostgreSQL
+DB_PORT=5432              # Puerto de PostgreSQL (por defecto: 5432)
+DB_USERNAME=tu_usuario    # Usuario de PostgreSQL
+DB_PASSWORD=tu_password   # Contraseña de PostgreSQL
+DB_NAME=nombre_bd         # Nombre de la base de datos
+```
+
+#### Variables de Azure Service Bus (Opcionales)
+
+```env
+AZURE_SB_CONNECTION=      # Cadena de conexión de Azure Service Bus
+AZURE_SB_QUEUE=           # Nombre de la cola de Azure Service Bus
+```
+
+#### Variables de Azure Storage (Opcionales)
+
+```env
+AZURE_STORAGE_CONTAINER=  # Nombre del contenedor de Azure Storage
+AZURE_STORAGE_CONNECTION= # Cadena de conexión de Azure Storage
+```
+
+### 3. Levantar el proyecto
+
+#### Usando Docker Compose
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker compose up -d --build
 ```
 
-## Deployment
+### 4. Ejecución de Migraciones
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Una vez configurada la base de datos, ejecuta las migraciones para crear las tablas necesarias:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run migration:run
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Modo Desarrollo
 
-## Resources
+```bash
+npm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+La aplicación estará disponible en `http://localhost:3000`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Modo Producción
 
-## Support
+```bash
+# Compilar el proyecto
+npm run build
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Ejecutar en producción
+npm run start:prod
+```
 
-## Stay in touch
+### Modo Debug
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npm run start:debug
+```
 
-## License
+## Documentación de la API
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Una vez que la aplicación esté corriendo, puedes acceder a la documentación interactiva de Swagger en:
+
+**URL de Documentación:** `http://localhost:3000/api/docs`
+
+La documentación incluye:
+- Endpoints de productos (`/products`)
+- Endpoints de usuarios (`/users`)
+- Endpoints de cotizaciones (`/quotes`)
+- Esquemas de datos y validaciones
+- Capacidad de probar los endpoints directamente desde el navegador
+
+## Scripts Disponibles
+
+```bash
+# Desarrollo
+npm run start:dev          # Inicia el servidor en modo desarrollo con hot-reload
+npm run start:debug        # Inicia el servidor en modo debug
+
+# Producción
+npm run build              # Compila el proyecto TypeScript
+npm run start:prod        # Ejecuta la aplicación compilada
+
+# Migraciones
+npm run migration:run      # Ejecuta las migraciones pendientes
+
+# Testing
+npm run test               # Ejecuta los tests unitarios
+
+## Estructura del Proyecto
+
+El proyecto sigue una arquitectura hexagonal (Clean Architecture) con las siguientes capas:
+
+- **Domain**: Entidades, agregados, repositorios y puertos del dominio
+- **Application**: Casos de uso y DTOs de aplicación
+- **Infrastructure**: Implementaciones de infraestructura (API, persistencia, servicios externos)

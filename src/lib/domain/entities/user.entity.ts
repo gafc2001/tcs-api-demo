@@ -8,8 +8,8 @@ export class UserEntity {
   ) {}
 
 
-  encryptPassword(password: string): string {
-    return bcrypt.hashSync(password, 10);
+  getEncryptedPassword(): string {
+    return bcrypt.hashSync(this._password, 10);
   }
 
   getId(): string {
