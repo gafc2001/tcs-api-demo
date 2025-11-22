@@ -1,0 +1,24 @@
+export class UserEntity {
+  constructor(
+    private readonly _id: string,
+    private _name: string,
+    private _email: string,
+    private _password: string,
+  ) {}
+
+  getId(): string {
+    return this._id;
+  }
+
+  getName(): string {
+    return this._name;
+  }
+
+  getEmail(): string {
+    return this._email;
+  }
+
+  getPassword(): string {
+    return this._password;
+  }
+}
