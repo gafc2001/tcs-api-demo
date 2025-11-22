@@ -8,7 +8,16 @@ import { ProductModule } from './lib/infrastructure/api/product.module';
 import { UserModule } from './lib/infrastructure/api/user.module';
 
 @Module({
-  imports: [DatabaseModule, ConfigModule, QuoteModule, ProductModule, UserModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    DatabaseModule,
+    QuoteModule,
+    ProductModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

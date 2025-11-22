@@ -15,7 +15,7 @@ async function bootstrap() {
     }),
   );
   
-  app.useGlobalFilters(new GlobalExceptionFilter());
+  // app.useGlobalFilters(new GlobalExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('TCS API')
