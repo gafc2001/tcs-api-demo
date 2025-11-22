@@ -1,0 +1,7 @@
+export class QuoteItemResponseDto {
+  id: string;
+  productId: string;
+  quantity: number;
+  price: number;
+}
+
