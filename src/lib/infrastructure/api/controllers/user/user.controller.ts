@@ -11,9 +11,10 @@ import {
   ApiResponse,
   ApiBody,
 } from '@nestjs/swagger';
-import { CreateUserDto } from '../../../../application/dto/user/create-user.dto';
 import { UserResponseDto } from '../../../../application/dto/user/user-response.dto';
 import { CreateUserUseCase } from '../../../../application/use-cases/create-user.use-case';
+import { CreateUserRequest } from '../../dto/user/create-user-request.dto';
+import { UserMapper } from '../../mappers/user.mapper';
 
 @ApiTags('users')
 @Controller('api/v1/users')
@@ -25,7 +26,7 @@ export class UserController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: CreateUserRequest })
   @ApiResponse({
     status: 201,
     description: 'User successfully created',
@@ -43,7 +44,10 @@ export class UserController {
     status: 500,
     description: 'Internal server error',
   })
-  async create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
+  async create(
+    @Body() createUserRequest: CreateUserRequest,
+  ): Promise<UserResponseDto> {
+    const createUserDto = UserMapper.toCreateUserDto(createUserRequest);
     return await this.createUserUseCase.execute(createUserDto);
   }
 }

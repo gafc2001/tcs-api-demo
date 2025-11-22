@@ -11,9 +11,10 @@ import {
   ApiResponse,
   ApiBody,
 } from '@nestjs/swagger';
-import { CreateProductDto } from '../../../../application/dto/product/create-product.dto';
 import { ProductResponseDto } from '../../../../application/dto/product/product-response.dto';
 import { CreateProductUseCase } from '../../../../application/use-cases/create-product.use-case';
+import { CreateProductRequest } from '../../dto/product/create-product-request.dto';
+import { ProductMapper } from '../../mappers/product.mapper';
 
 @ApiTags('products')
 @Controller('api/v1/products')
@@ -25,7 +26,7 @@ export class ProductController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new product' })
-  @ApiBody({ type: CreateProductDto })
+  @ApiBody({ type: CreateProductRequest })
   @ApiResponse({
     status: 201,
     description: 'Product successfully created',
@@ -39,7 +40,12 @@ export class ProductController {
     status: 500,
     description: 'Internal server error',
   })
-  async create(@Body() createProductDto: CreateProductDto): Promise<ProductResponseDto> {
+  async create(
+    @Body() createProductRequest: CreateProductRequest,
+  ): Promise<ProductResponseDto> {
+    const createProductDto = ProductMapper.toCreateProductDto(
+      createProductRequest,
+    );
     return await this.createProductUseCase.execute(createProductDto);
   }
 }

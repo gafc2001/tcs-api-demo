@@ -11,9 +11,10 @@ import {
   ApiResponse,
   ApiBody,
 } from '@nestjs/swagger';
-import { CreateQuoteDto } from '../../../../application/dto/quote/create-quote.dto';
 import { QuoteResponseDto } from '../../../../application/dto/quote/quote-response.dto';
 import { CreateQuoteUseCase } from '../../../../application/use-cases/create-quote.use-case';
+import { CreateQuoteRequest } from '../../dto/quote/create-quote-request.dto';
+import { QuoteMapper } from '../../mappers/quote.mapper';
 
 @ApiTags('quotes')
 @Controller('api/v1/quotes')
@@ -25,7 +26,7 @@ export class QuoteController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new quote' })
-  @ApiBody({ type: CreateQuoteDto })
+  @ApiBody({ type: CreateQuoteRequest })
   @ApiResponse({
     status: 201,
     description: 'Quote successfully created',
@@ -43,7 +44,10 @@ export class QuoteController {
     status: 500,
     description: 'Internal server error',
   })
-  async create(@Body() createQuoteDto: CreateQuoteDto): Promise<QuoteResponseDto> {
+  async create(
+    @Body() createQuoteRequest: CreateQuoteRequest,
+  ): Promise<QuoteResponseDto> {
+    const createQuoteDto = QuoteMapper.toCreateQuoteDto(createQuoteRequest);
     return await this.createQuoteUseCase.execute(createQuoteDto);
   }
 }
