@@ -63,7 +63,7 @@ export class CreateQuoteUseCase {
       customerId: quote.getCustomerId(),
       totalAmount: quote.getTotalAmount(),
       status: quote.getStatus(),
-      items: quote.getQuoteItems().map((item) => ({
+      quoteItems: quote.getQuoteItems().map((item) => ({
         id: item.getId(),
         productId: item.getProductId(),
         quantity: item.getQuantity(),
