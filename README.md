@@ -118,8 +118,8 @@ npm run start:prod        # Ejecuta la aplicación compilada
 # Migraciones
 npm run migration:run      # Ejecuta las migraciones pendientes
 
-# Testing
-npm run test               # Ejecuta los tests unitarios
+# Testing unitarios
+npm run test:unit               # Ejecuta los tests unitarios
 
 ## Estructura del Proyecto
 
